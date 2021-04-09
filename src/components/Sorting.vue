@@ -9,21 +9,54 @@
                 Sort
             </v-btn>
         </v-card>
-        <v-card class="d-flex flex-wrap mt-2" flat>
+        <v-card class="d-flex flex-wrap mt-2" flat v-if="false">
             <div v-for="(v, n) in values" :key="n" class="px-1">
                 {{ v }}
             </div>
         </v-card>
+        <v-sparkline
+            :value="values"
+            :gradient="gradient"
+            :smooth="radius || false"
+            :padding="padding"
+            :line-width="width"
+            :stroke-linecap="lineCap"
+            :gradient-direction="gradientDirection"
+            :fill="fill"
+            :type="type"
+            :auto-line-width="autoLineWidth"
+            :auto-draw="autoDraw"
+        ></v-sparkline>
     </v-container>
 </template>
 
 <script>
 import { sleep } from "@/utils.js";
 
+const gradients = [
+    ["#222"],
+    ["#42b3f4"],
+    ["red", "orange", "yellow"],
+    ["purple", "violet"],
+    ["#00c6ff", "#F0F", "#FF0"],
+    ["#f72047", "#ffd200", "#1feaea"],
+];
+
 export default {
     name: "Sorting",
     data: () => ({
         values: [],
+        width: 1,
+        radius: 1,
+        padding: 8,
+        lineCap: "round",
+        gradient: gradients[5],
+        gradientDirection: "top",
+        gradients,
+        fill: true,
+        type: "bars",
+        autoLineWidth: false,
+        autoDraw: true,
     }),
     mounted: async function() {
         await this.randomize();
