@@ -132,8 +132,8 @@ export default {
                         this.$set(values, i, values[i + 1]);
                         this.$set(values, i + 1, temp);
                         swapped = true;
-                        await sleep(1);
                     }
+                    await sleep(1);
                 }
                 n--;
             } while (swapped);
