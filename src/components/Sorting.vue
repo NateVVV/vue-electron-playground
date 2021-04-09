@@ -22,6 +22,12 @@
                     Insertionsort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
+                    Quicksort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Mergesort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
                     Heapsort
                 </v-btn>
             </div>
