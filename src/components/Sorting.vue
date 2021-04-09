@@ -54,7 +54,7 @@ export default {
         gradientDirection: "top",
         gradients,
         fill: true,
-        type: "bars",
+        type: "bar",
         autoLineWidth: false,
         autoDraw: false,
     }),
