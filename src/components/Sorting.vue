@@ -46,6 +46,7 @@ export default {
                 for (let n = this.values.length; n > 1; n--) {
                     for (let i = 0; i < n - 1; i++) {
                         if (this.values[i] > this.values[i + 1]) {
+                            // swap elements
                             const temp = values[i];
                             this.$set(values, i, values[i + 1]);
                             this.$set(values, i + 1, temp);
