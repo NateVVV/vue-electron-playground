@@ -2,12 +2,29 @@
     <v-container>
         Hier wird sortiert
         <v-card flat>
-            <v-btn elevation="2" @click="randomize" class="ma-1">
-                create random numbers
-            </v-btn>
-            <v-btn @click="bubblesort" class="ma-1">
-                Bubblesort
-            </v-btn>
+            <div>
+                <v-btn elevation="2" @click="randomize" class="ma-1">
+                    create random numbers
+                </v-btn>
+            </div>
+            <div>
+                <v-btn @click="bubblesort" class="ma-1" :disabled="sorting">
+                    Bubblesort
+                </v-btn>
+                <v-btn
+                    @click="improvedBubblesort"
+                    class="ma-1"
+                    :disabled="sorting"
+                >
+                    improved Bubblesort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Insertionsort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Heapsort
+                </v-btn>
+            </div>
         </v-card>
         <v-card class="d-flex flex-wrap mt-2" flat v-if="false">
             <div v-for="(v, n) in values" :key="n" class="px-1">
@@ -57,6 +74,7 @@ export default {
         type: "bar",
         autoLineWidth: false,
         autoDraw: false,
+        sorting: false,
     }),
     mounted: async function() {
         await this.randomize();
@@ -73,9 +91,17 @@ export default {
                 this.values.push(Math.floor(n));
             }
             console.log("Randomized");
+            this.enableSorting();
+        },
+        setupSorting: function() {
+            this.autoDraw = false;
+            this.sorting = true;
+        },
+        enableSorting: function() {
+            this.sorting = false;
         },
         bubblesort: async function() {
-            this.autoDraw = false;
+            this.setupSorting();
             const values = this.values;
             for (let n = values.length; n > 1; n--) {
                 for (let i = 0; i < n - 1; i++) {
@@ -84,11 +110,35 @@ export default {
                         const temp = values[i];
                         this.$set(values, i, values[i + 1]);
                         this.$set(values, i + 1, temp);
-                        await sleep(1);
                     }
+                    // wait after every step (to visualize the complexity)
+                    await sleep(1);
                 }
             }
             console.log("Finished sorting");
+            this.enableSorting();
+        },
+        improvedBubblesort: async function() {
+            this.setupSorting();
+            const values = this.values;
+            let swapped;
+            let n = values.length;
+            do {
+                swapped = false;
+                for (let i = 0; i < n - 1; i++) {
+                    if (values[i] > values[i + 1]) {
+                        // swap elements
+                        const temp = values[i];
+                        this.$set(values, i, values[i + 1]);
+                        this.$set(values, i + 1, temp);
+                        swapped = true;
+                        await sleep(1);
+                    }
+                }
+                n--;
+            } while (swapped);
+            console.log("Finished sorting");
+            this.enableSorting();
         },
     },
 };
