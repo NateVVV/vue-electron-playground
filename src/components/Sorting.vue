@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { sleep } from "@/utils.js";
+
 export default {
     name: "Sorting",
     data: () => ({
@@ -31,7 +33,7 @@ export default {
             const amount = 100;
             const max_number = 100;
             this.values = [];
-            await new Promise((resolve) => setTimeout(resolve, 50));
+            await sleep(50);
             for (let i = 0; i < amount; i++) {
                 let n = Math.random() * max_number;
                 this.values.push(Math.floor(n));
@@ -47,9 +49,7 @@ export default {
                             const temp = values[i];
                             this.$set(values, i, values[i + 1]);
                             this.$set(values, i + 1, temp);
-                            await new Promise((resolve) =>
-                                setTimeout(resolve, 1)
-                            );
+                            await sleep(1);
                         }
                     }
                 }
