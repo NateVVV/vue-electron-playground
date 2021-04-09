@@ -56,13 +56,14 @@ export default {
         fill: true,
         type: "bars",
         autoLineWidth: false,
-        autoDraw: true,
+        autoDraw: false,
     }),
     mounted: async function() {
         await this.randomize();
     },
     methods: {
         randomize: async function() {
+            this.autoDraw = true;
             const amount = 100;
             const max_number = 100;
             this.values = [];
@@ -74,6 +75,7 @@ export default {
             console.log("Randomized");
         },
         sort: async function() {
+            this.autoDraw = false;
             const values = this.values;
             try {
                 for (let n = this.values.length; n > 1; n--) {
