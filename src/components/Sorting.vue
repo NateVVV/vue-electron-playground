@@ -5,8 +5,8 @@
             <v-btn elevation="2" @click="randomize" class="ma-1">
                 create random numbers
             </v-btn>
-            <v-btn @click="sort" class="ma-1">
-                Sort
+            <v-btn @click="bubblesort" class="ma-1">
+                Bubblesort
             </v-btn>
         </v-card>
         <v-card class="d-flex flex-wrap mt-2" flat v-if="false">
@@ -74,7 +74,7 @@ export default {
             }
             console.log("Randomized");
         },
-        sort: async function() {
+        bubblesort: async function() {
             this.autoDraw = false;
             const values = this.values;
             try {
