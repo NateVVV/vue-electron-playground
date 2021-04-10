@@ -39,7 +39,11 @@
                 >
                     Shellsort
                 </v-btn>
-                <v-btn class="ma-1" disabled>
+                <v-btn
+                    @click="sort('quicksort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Quicksort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
@@ -110,6 +114,7 @@ export default {
             ["improvedBubblesort", this.improvedBubblesort],
             ["insertionsort", this.insertionsort],
             ["shellsort", this.shellsort],
+            ["quicksort", this.quicksort],
         ]);
         this.sortMapping = sortMapping;
     },
@@ -228,6 +233,37 @@ export default {
                     }
                 }
             }
+        },
+        quicksort: async function() {
+            const values = this.values;
+            const length = values.length;
+            await this.quicksortRecursive(values, 0, length - 1);
+        },
+        quicksortRecursive: async function(elements, left, right) {
+            // End of recursion reached?
+            if (left >= right) return;
+
+            const pivotPos = await this.quicksortDivide(elements, left, right);
+            await this.quicksortRecursive(elements, left, pivotPos - 1);
+            await this.quicksortRecursive(elements, pivotPos + 1, right);
+        },
+        quicksortDivide: async function(elements, left, right) {
+            const pivot = elements[right];
+            let i = left;
+            let j = right - 1;
+
+            while (i < j) {
+                // Find the first element >= pivot
+                while (i < right && elements[i] < pivot) i++;
+                // Find the last element < pivot
+                while (j > left && elements[j] >= pivot) j--;
+                // If the greater element is left of the lesser element, switch them
+                if (i < j) await this.swapInArray(elements, i, j);
+            }
+            // Move pivot element to its final position
+            if (elements[i] > pivot) await this.swapInArray(elements, i, right);
+
+            return i;
         },
     },
 };
