@@ -113,6 +113,12 @@ export default {
         unlockSorting: function() {
             this.isSorting = false;
         },
+        swapInArray: async function(array, firstIndex, secondIndex) {
+            const temp = array[firstIndex]
+            this.$set(array, firstIndex, array[secondIndex])
+            this.$set(array, secondIndex, temp)
+            await sleep(1);
+        },
         bubblesort: async function() {
             this.lockSorting();
             const values = this.values;
@@ -120,12 +126,10 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        const temp = values[i];
-                        this.$set(values, i, values[i + 1]);
-                        this.$set(values, i + 1, temp);
+                        await this.swapInArray(values, i, i + 1)
                     }
                     // wait after every step (to visualize the complexity)
-                    await sleep(1);
+                    //await sleep(1);
                 }
             }
             console.log("Finished sorting");
@@ -141,12 +145,10 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        const temp = values[i];
-                        this.$set(values, i, values[i + 1]);
-                        this.$set(values, i + 1, temp);
+                        await this.swapInArray(values, i, i + 1)
                         swapped = true;
                     }
-                    await sleep(1);
+                    //await sleep(1);
                 }
                 n--;
             } while (swapped);
@@ -160,12 +162,8 @@ export default {
                 const temp = values[i];
                 let j = i;
                 while (j > 0 && values[j - 1] > temp) {
-                    this.$set(values, j, values[j - 1]);
+                    await this.swapInArray(values, j, j - 1)
                     j--;
-                    // visualize moved value, too:
-                    this.$set(values, j, temp);
-
-                    await sleep(1);
                 }
                 // not necessary, since the temp values is already moved (due to visualization)
                 //this.$set(values, j, temp);
