@@ -6,6 +6,9 @@
                 <v-btn elevation="2" @click="randomize" class="ma-1">
                     create random numbers
                 </v-btn>
+                <v-btn elevation="2" @click="createNumberRange" class="ma-1">
+                    create equal range
+                </v-btn>
             </div>
             <div>
                 <v-btn @click="bubblesort" class="ma-1" :disabled="isSorting">
@@ -105,6 +108,24 @@ export default {
             }
             console.log("Randomized");
             this.unlockSorting();
+        },
+        createNumberRange: async function() {
+            this.autoDraw = true;
+            const amount = 100;
+            this.values = [];
+            await sleep(50);
+            for (let i = 0; i < amount; i++) {
+                this.values.push(i + 1);
+            }
+            await this.shuffle(this.values);
+            console.log("Shuffled");
+            this.unlockSorting();
+        },
+        shuffle: async function(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                await this.swapInArray(array, i, j);
+            }
         },
         lockSorting: function() {
             this.autoDraw = false;
