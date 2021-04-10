@@ -18,8 +18,15 @@
                 >
                     improved Bubblesort
                 </v-btn>
-                <v-btn class="ma-1" disabled>
+                <v-btn
+                    @click="insertionsort"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Insertionsort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Shellsort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
                     Quicksort
@@ -143,6 +150,27 @@ export default {
                 }
                 n--;
             } while (swapped);
+            console.log("Finished sorting");
+            this.unlockSorting();
+        },
+        insertionsort: async function() {
+            this.lockSorting();
+            const values = this.values;
+            for (let i = 1; i < values.length; i++) {
+                const temp = values[i];
+                let j = i;
+                while (j > 0 && values[j - 1] > temp) {
+                    this.$set(values, j, values[j - 1]);
+                    j--;
+                    // visualize moved value, too:
+                    this.$set(values, j, temp);
+
+                    await sleep(1);
+                }
+                // not necessary, since the temp values is already moved (due to visualization)
+                //this.$set(values, j, temp);
+                //await sleep(1);
+            }
             console.log("Finished sorting");
             this.unlockSorting();
         },
