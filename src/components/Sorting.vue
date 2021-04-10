@@ -25,7 +25,7 @@
                 >
                     Insertionsort
                 </v-btn>
-                <v-btn class="ma-1" disabled>
+                <v-btn @click="shellsort" class="ma-1" :disabled="isSorting">
                     Shellsort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
@@ -113,11 +113,11 @@ export default {
         unlockSorting: function() {
             this.isSorting = false;
         },
-        swapInArray: async function(array, firstIndex, secondIndex) {
-            const temp = array[firstIndex]
-            this.$set(array, firstIndex, array[secondIndex])
-            this.$set(array, secondIndex, temp)
-            await sleep(1);
+        swapInArray: async function(array, firstIndex, secondIndex, wait = 1) {
+            const temp = array[firstIndex];
+            this.$set(array, firstIndex, array[secondIndex]);
+            this.$set(array, secondIndex, temp);
+            await sleep(wait);
         },
         bubblesort: async function() {
             this.lockSorting();
@@ -126,7 +126,7 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        await this.swapInArray(values, i, i + 1)
+                        await this.swapInArray(values, i, i + 1);
                     }
                     // wait after every step (to visualize the complexity)
                     //await sleep(1);
@@ -145,7 +145,7 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        await this.swapInArray(values, i, i + 1)
+                        await this.swapInArray(values, i, i + 1);
                         swapped = true;
                     }
                     //await sleep(1);
@@ -162,7 +162,7 @@ export default {
                 const temp = values[i];
                 let j = i;
                 while (j > 0 && values[j - 1] > temp) {
-                    await this.swapInArray(values, j, j - 1)
+                    await this.swapInArray(values, j, j - 1);
                     j--;
                 }
                 // not necessary, since the temp values is already moved (due to visualization)
@@ -170,6 +170,28 @@ export default {
                 //await sleep(1);
             }
             console.log("Finished sorting");
+            this.unlockSorting();
+        },
+        shellsort: async function() {
+            this.lockSorting();
+            const values = this.values;
+            const length = values.length;
+            for (
+                let gap = Math.floor(length / 2);
+                gap > 0;
+                gap = Math.floor(gap / 2)
+            ) {
+                for (let i = gap; i < length; i++) {
+                    const temp = values[i];
+                    for (
+                        let j = i;
+                        j >= gap && values[j - gap] > temp;
+                        j -= gap
+                    ) {
+                        await this.swapInArray(values, j, j - gap);
+                    }
+                }
+            }
             this.unlockSorting();
         },
     },
