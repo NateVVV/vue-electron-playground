@@ -11,24 +11,32 @@
                 </v-btn>
             </div>
             <div>
-                <v-btn @click="bubblesort" class="ma-1" :disabled="isSorting">
+                <v-btn
+                    @click="sort('bubblesort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Bubblesort
                 </v-btn>
                 <v-btn
-                    @click="improvedBubblesort"
+                    @click="sort('improvedBubblesort')"
                     class="ma-1"
                     :disabled="isSorting"
                 >
                     improved Bubblesort
                 </v-btn>
                 <v-btn
-                    @click="insertionsort"
+                    @click="sort('insertionsort')"
                     class="ma-1"
                     :disabled="isSorting"
                 >
                     Insertionsort
                 </v-btn>
-                <v-btn @click="shellsort" class="ma-1" :disabled="isSorting">
+                <v-btn
+                    @click="sort('shellsort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Shellsort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
@@ -91,9 +99,19 @@ export default {
         autoLineWidth: false,
         autoDraw: false,
         isSorting: false,
+        sortMapping: new Map(),
     }),
     mounted: async function() {
         await this.randomize();
+    },
+    created: function() {
+        const sortMapping = new Map([
+            ["bubblesort", this.bubblesort],
+            ["improvedBubblesort", this.improvedBubblesort],
+            ["insertionsort", this.insertionsort],
+            ["shellsort", this.shellsort],
+        ]);
+        this.sortMapping = sortMapping;
     },
     methods: {
         randomize: async function() {
@@ -140,8 +158,14 @@ export default {
             this.$set(array, secondIndex, temp);
             await sleep(wait);
         },
-        bubblesort: async function() {
+        sort: async function(algorithm) {
             this.lockSorting();
+            const sortAlgorithm = this.sortMapping.get(algorithm);
+            await sortAlgorithm();
+            console.log("Finished sorting");
+            this.unlockSorting();
+        },
+        bubblesort: async function() {
             const values = this.values;
             for (let n = values.length; n > 1; n--) {
                 for (let i = 0; i < n - 1; i++) {
@@ -153,11 +177,8 @@ export default {
                     //await sleep(1);
                 }
             }
-            console.log("Finished sorting");
-            this.unlockSorting();
         },
         improvedBubblesort: async function() {
-            this.lockSorting();
             const values = this.values;
             let swapped;
             let n = values.length;
@@ -173,11 +194,8 @@ export default {
                 }
                 n--;
             } while (swapped);
-            console.log("Finished sorting");
-            this.unlockSorting();
         },
         insertionsort: async function() {
-            this.lockSorting();
             const values = this.values;
             for (let i = 1; i < values.length; i++) {
                 const temp = values[i];
@@ -190,11 +208,8 @@ export default {
                 //this.$set(values, j, temp);
                 //await sleep(1);
             }
-            console.log("Finished sorting");
-            this.unlockSorting();
         },
         shellsort: async function() {
-            this.lockSorting();
             const values = this.values;
             const length = values.length;
             for (
@@ -213,7 +228,6 @@ export default {
                     }
                 }
             }
-            this.unlockSorting();
         },
     },
 };
