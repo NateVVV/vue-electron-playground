@@ -8,13 +8,13 @@
                 </v-btn>
             </div>
             <div>
-                <v-btn @click="bubblesort" class="ma-1" :disabled="sorting">
+                <v-btn @click="bubblesort" class="ma-1" :disabled="isSorting">
                     Bubblesort
                 </v-btn>
                 <v-btn
                     @click="improvedBubblesort"
                     class="ma-1"
-                    :disabled="sorting"
+                    :disabled="isSorting"
                 >
                     improved Bubblesort
                 </v-btn>
@@ -80,7 +80,7 @@ export default {
         type: "bar",
         autoLineWidth: false,
         autoDraw: false,
-        sorting: false,
+        isSorting: false,
     }),
     mounted: async function() {
         await this.randomize();
@@ -97,17 +97,17 @@ export default {
                 this.values.push(Math.floor(n));
             }
             console.log("Randomized");
-            this.enableSorting();
+            this.unlockSorting();
         },
-        setupSorting: function() {
+        lockSorting: function() {
             this.autoDraw = false;
-            this.sorting = true;
+            this.isSorting = true;
         },
-        enableSorting: function() {
-            this.sorting = false;
+        unlockSorting: function() {
+            this.isSorting = false;
         },
         bubblesort: async function() {
-            this.setupSorting();
+            this.lockSorting();
             const values = this.values;
             for (let n = values.length; n > 1; n--) {
                 for (let i = 0; i < n - 1; i++) {
@@ -122,10 +122,10 @@ export default {
                 }
             }
             console.log("Finished sorting");
-            this.enableSorting();
+            this.unlockSorting();
         },
         improvedBubblesort: async function() {
-            this.setupSorting();
+            this.lockSorting();
             const values = this.values;
             let swapped;
             let n = values.length;
@@ -144,7 +144,7 @@ export default {
                 n--;
             } while (swapped);
             console.log("Finished sorting");
-            this.enableSorting();
+            this.unlockSorting();
         },
     },
 };
