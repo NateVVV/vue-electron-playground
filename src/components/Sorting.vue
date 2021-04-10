@@ -89,11 +89,11 @@ export default {
         randomize: async function() {
             this.autoDraw = true;
             const amount = 100;
-            const max_number = 100;
+            const max_number = 99;
             this.values = [];
             await sleep(50);
             for (let i = 0; i < amount; i++) {
-                let n = Math.random() * max_number;
+                let n = Math.random() * max_number + 1;
                 this.values.push(Math.floor(n));
             }
             console.log("Randomized");
