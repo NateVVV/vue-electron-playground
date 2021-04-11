@@ -176,8 +176,8 @@ export default {
         },
         swapInArray: async function(array, firstIndex, secondIndex, wait = 1) {
             const temp = array[firstIndex];
-            this.$set(array, firstIndex, array[secondIndex]);
-            this.$set(array, secondIndex, temp);
+            array.splice(firstIndex, 1, array[secondIndex])
+            array.splice(secondIndex, 1, temp)
             await sleep(wait);
         },
         sort: async function(algorithm) {
@@ -227,7 +227,7 @@ export default {
                     j--;
                 }
                 // not necessary, since the temp values is already moved (due to visualization)
-                //this.$set(values, j, temp);
+                //values.splice(j, 1, temp)
                 //await sleep(1);
             }
         },
