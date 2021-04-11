@@ -34,7 +34,7 @@ function filledArray(size) {
  * @param {number} second index of the second value
  * @param {number} wait time how long to wait after the values were swapped
  */
-async function swap(array, first, second, wait = 1) {
+async function swap(array, first, second, { wait = 1 } = {}) {
     const temp = array[first];
     array.splice(first, 1, array[second]);
     array.splice(second, 1, temp);

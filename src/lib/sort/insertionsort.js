@@ -1,6 +1,6 @@
 import { swap } from "@/lib/array.js";
 
-async function insertionsort(array, swapDelay = 1) {
+async function insertionsort(array, swapDelay = { wait: 1 }) {
     for (let i = 1; i < array.length; i++) {
         const temp = array[i];
         let j = i;

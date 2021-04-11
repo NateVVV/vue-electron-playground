@@ -1,6 +1,6 @@
 import { swap } from "@/lib/array.js";
 
-async function quicksort(array, swapDelay = 1) {
+async function quicksort(array, swapDelay = { wait: 1 }) {
     const length = array.length;
     await quicksortRecursive(array, 0, length - 1, swapDelay);
 }

@@ -1,6 +1,6 @@
 import { swap } from "@/lib/array.js";
 
-async function heapsort(array, swapDelay = 1) {
+async function heapsort(array, swapDelay = { wait: 1 }) {
     await buildHeap(array, swapDelay);
 
     for (

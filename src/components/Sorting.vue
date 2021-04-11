@@ -16,7 +16,7 @@
                     type="number"
                 ></v-text-field>
                 <v-slider
-                    v-model="delay"
+                    v-model="delay.wait"
                     color="orange"
                     label="Delay"
                     hint="Delay of swaps (ms)"
@@ -125,7 +125,7 @@ export default {
         arraySize: 100,
         values: [],
         isSorting: false,
-        delay: 1,
+        delay: { wait: 1 },
         sortMapping: new Map(),
         sparklineSettings: {
             width: 1,
