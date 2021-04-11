@@ -83,8 +83,12 @@
 
 <script>
 import { sleep } from "@/utils.js";
-import { randomArray, filledArray, swapInPlace } from "@/lib/array.js";
+import { randomArray, filledArray } from "@/lib/array.js";
 import { shuffle } from "@/lib/sort/shuffle.js";
+import { bubblesort, improvedBubblesort } from "@/lib/sort/bubblesort.js";
+import { insertionsort } from "@/lib/sort/insertionsort.js";
+import { shellsort } from "@/lib/sort/shellsort.js";
+import { quicksort } from "@/lib/sort/quicksort.js";
 
 const gradients = [
     ["#222"],
@@ -121,11 +125,11 @@ export default {
     },
     created: function() {
         const sortMapping = new Map([
-            ["bubblesort", this.bubblesort],
-            ["improvedBubblesort", this.improvedBubblesort],
-            ["insertionsort", this.insertionsort],
-            ["shellsort", this.shellsort],
-            ["quicksort", this.quicksort],
+            ["bubblesort", bubblesort],
+            ["improvedBubblesort", improvedBubblesort],
+            ["insertionsort", insertionsort],
+            ["shellsort", shellsort],
+            ["quicksort", quicksort],
         ]);
         this.sortMapping = sortMapping;
     },
@@ -162,104 +166,9 @@ export default {
         sort: async function(algorithm) {
             this.lockSorting();
             const sortAlgorithm = this.sortMapping.get(algorithm);
-            await sortAlgorithm();
+            await sortAlgorithm(this.values);
             console.log("Finished sorting");
             this.unlockSorting();
-        },
-        bubblesort: async function() {
-            const values = this.values;
-            for (let n = values.length; n > 1; n--) {
-                for (let i = 0; i < n - 1; i++) {
-                    if (values[i] > values[i + 1]) {
-                        // swap elements
-                        await swapInPlace(values, i, i + 1);
-                    }
-                    // wait after every step (to visualize the complexity)
-                    //await sleep(1);
-                }
-            }
-        },
-        improvedBubblesort: async function() {
-            const values = this.values;
-            let swapped;
-            let n = values.length;
-            do {
-                swapped = false;
-                for (let i = 0; i < n - 1; i++) {
-                    if (values[i] > values[i + 1]) {
-                        // swap elements
-                        await swapInPlace(values, i, i + 1);
-                        swapped = true;
-                    }
-                    //await sleep(1);
-                }
-                n--;
-            } while (swapped);
-        },
-        insertionsort: async function() {
-            const values = this.values;
-            for (let i = 1; i < values.length; i++) {
-                const temp = values[i];
-                let j = i;
-                while (j > 0 && values[j - 1] > temp) {
-                    await swapInPlace(values, j, j - 1);
-                    j--;
-                }
-                // not necessary, since the temp values is already moved (due to visualization)
-                //values.splice(j, 1, temp)
-                //await sleep(1);
-            }
-        },
-        shellsort: async function() {
-            const values = this.values;
-            const length = values.length;
-            for (
-                let gap = Math.floor(length / 2);
-                gap > 0;
-                gap = Math.floor(gap / 2)
-            ) {
-                for (let i = gap; i < length; i++) {
-                    const temp = values[i];
-                    for (
-                        let j = i;
-                        j >= gap && values[j - gap] > temp;
-                        j -= gap
-                    ) {
-                        await swapInPlace(values, j, j - gap);
-                    }
-                }
-            }
-        },
-        quicksort: async function() {
-            const values = this.values;
-            const length = values.length;
-            await this.quicksortRecursive(values, 0, length - 1);
-        },
-        quicksortRecursive: async function(elements, left, right) {
-            // End of recursion reached?
-            if (left >= right) return;
-
-            const pivotPos = await this.quicksortDivide(elements, left, right);
-            await this.quicksortRecursive(elements, left, pivotPos - 1);
-            await this.quicksortRecursive(elements, pivotPos + 1, right);
-        },
-        quicksortDivide: async function(elements, left, right) {
-            const pivot = elements[right];
-            let i = left;
-            let j = right - 1;
-
-            while (i < j) {
-                // Find the first element >= pivot
-                while (i < right && elements[i] < pivot) i++;
-                // Find the last element < pivot
-                while (j > left && elements[j] >= pivot) j--;
-                // If the greater element is left of the lesser element, switch them
-                if (i < j) await swapInPlace(elements, i, j);
-            }
-            // Move pivot element to its final position
-            if (elements[i] > pivot) await swapInPlace(elements, i, right);
-
-            return i;
         },
     },
 };
