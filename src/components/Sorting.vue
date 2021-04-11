@@ -83,7 +83,7 @@
 
 <script>
 import { sleep } from "@/utils.js";
-import { randomArray, filledArray } from "@/lib/array-generation.js";
+import { randomArray, filledArray, swapInPlace } from "@/lib/array.js";
 
 const gradients = [
     ["#222"],
@@ -154,7 +154,7 @@ export default {
         shuffle: async function(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                await this.swapInArray(array, i, j);
+                await swapInPlace(array, i, j);
             }
         },
         lockSorting: function() {
@@ -163,12 +163,6 @@ export default {
         },
         unlockSorting: function() {
             this.isSorting = false;
-        },
-        swapInArray: async function(array, firstIndex, secondIndex, wait = 1) {
-            const temp = array[firstIndex];
-            array.splice(firstIndex, 1, array[secondIndex]);
-            array.splice(secondIndex, 1, temp);
-            await sleep(wait);
         },
         sort: async function(algorithm) {
             this.lockSorting();
@@ -183,7 +177,7 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        await this.swapInArray(values, i, i + 1);
+                        await swapInPlace(values, i, i + 1);
                     }
                     // wait after every step (to visualize the complexity)
                     //await sleep(1);
@@ -199,7 +193,7 @@ export default {
                 for (let i = 0; i < n - 1; i++) {
                     if (values[i] > values[i + 1]) {
                         // swap elements
-                        await this.swapInArray(values, i, i + 1);
+                        await swapInPlace(values, i, i + 1);
                         swapped = true;
                     }
                     //await sleep(1);
@@ -213,7 +207,7 @@ export default {
                 const temp = values[i];
                 let j = i;
                 while (j > 0 && values[j - 1] > temp) {
-                    await this.swapInArray(values, j, j - 1);
+                    await swapInPlace(values, j, j - 1);
                     j--;
                 }
                 // not necessary, since the temp values is already moved (due to visualization)
@@ -236,7 +230,7 @@ export default {
                         j >= gap && values[j - gap] > temp;
                         j -= gap
                     ) {
-                        await this.swapInArray(values, j, j - gap);
+                        await swapInPlace(values, j, j - gap);
                     }
                 }
             }
@@ -265,10 +259,10 @@ export default {
                 // Find the last element < pivot
                 while (j > left && elements[j] >= pivot) j--;
                 // If the greater element is left of the lesser element, switch them
-                if (i < j) await this.swapInArray(elements, i, j);
+                if (i < j) await swapInPlace(elements, i, j);
             }
             // Move pivot element to its final position
-            if (elements[i] > pivot) await this.swapInArray(elements, i, right);
+            if (elements[i] > pivot) await swapInPlace(elements, i, right);
 
             return i;
         },

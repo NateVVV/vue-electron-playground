@@ -1,3 +1,5 @@
+import { sleep } from "@/utils.js";
+
 /**
  * Creates an array with random values. The maximum values is equal the size of the array
  * @param {number} size The size of the array
@@ -25,4 +27,18 @@ function filledArray(size) {
     return array;
 }
 
-export { randomArray, filledArray };
+/**
+ * Swap two values in an array, specified by the indices
+ * @param {Array<number>} array The array in which the values get swapped
+ * @param {number} first index of the first value
+ * @param {number} second index of the second value
+ * @param {number} wait time how long to wait after the values were swapped
+ */
+async function swapInPlace(array, first, second, wait = 1) {
+    const temp = array[first];
+    array.splice(first, 1, array[second]);
+    array.splice(second, 1, temp);
+    await sleep(wait);
+}
+
+export { randomArray, filledArray, swapInPlace };
