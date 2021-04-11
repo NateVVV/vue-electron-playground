@@ -83,6 +83,7 @@
 
 <script>
 import { sleep } from "@/utils.js";
+import { randomArray, filledArray } from "@/lib/array-generation.js";
 
 const gradients = [
     ["#222"],
@@ -131,21 +132,12 @@ export default {
         cancelSorting: function() {
             // delete old array -> set array to zero
             this.values.splice(0);
-            // create a completely new reference to this array
-            this.values = [];
         },
         randomize: async function() {
             this.cancelSorting();
             this.autoDraw = true;
             await sleep(50);
-            const amount = this.arraySize;
-            const values = this.values;
-            let newValues = [];
-            for (let i = 0; i < amount; i++) {
-                const n = Math.random() * (amount - 1) + 1;
-                newValues.push(Math.floor(n));
-            }
-            values.push(...newValues);
+            this.values = randomArray(this.arraySize);
             console.log("Randomized");
             this.unlockSorting();
         },
@@ -153,15 +145,9 @@ export default {
             this.cancelSorting();
             this.autoDraw = true;
             await sleep(50);
-            const amount = this.arraySize;
-            const values = this.values;
-            let newValues = [];
-            for (let i = 0; i < amount; i++) {
-                newValues.push(i + 1);
-            }
-            values.push(...newValues);
+            this.values = filledArray(this.arraySize);
             this.lockSorting();
-            await this.shuffle(values);
+            await this.shuffle(this.values);
             console.log("Shuffled");
             this.unlockSorting();
         },
