@@ -84,6 +84,7 @@
 <script>
 import { sleep } from "@/utils.js";
 import { randomArray, filledArray, swapInPlace } from "@/lib/array.js";
+import { shuffle } from "@/lib/sort/shuffle.js";
 
 const gradients = [
     ["#222"],
@@ -147,15 +148,9 @@ export default {
             await sleep(50);
             this.values = filledArray(this.arraySize);
             this.lockSorting();
-            await this.shuffle(this.values);
+            await shuffle(this.values);
             console.log("Shuffled");
             this.unlockSorting();
-        },
-        shuffle: async function(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                await swapInPlace(array, i, j);
-            }
         },
         lockSorting: function() {
             this.autoDraw = false;
