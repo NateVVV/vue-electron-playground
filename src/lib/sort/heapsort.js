@@ -24,34 +24,17 @@ async function buildHeap(array) {
 }
 
 async function heapify(heap, length, parentPosition) {
-    let isHeap = false;
-    while (!isHeap) {
-        let leftChildPosition = parentPosition * 2 + 1;
-        let rightChildPosition = parentPosition * 2 + 2;
-
-        // find largest element
-        let largestPosition = parentPosition;
+    let childPosition = 2 * parentPosition + 1;
+    while (childPosition < length) {
         if (
-            leftChildPosition < length &&
-            heap[leftChildPosition] > heap[largestPosition]
+            childPosition + 1 < length &&
+            heap[childPosition + 1] > heap[childPosition]
         )
-            largestPosition = leftChildPosition;
-
-        if (
-            rightChildPosition < length &&
-            heap[rightChildPosition] > heap[largestPosition]
-        )
-            largestPosition = rightChildPosition;
-
-        // if parent is already largest, go to next
-        if (largestPosition == parentPosition) {
-            isHeap = true;
-            return;
-        }
-        // switch parent
-        await swapInPlace(heap, parentPosition, largestPosition);
-        // fix the child
-        parentPosition = largestPosition;
+            childPosition += 1;
+        if (heap[parentPosition] >= heap[childPosition]) break;
+        await swapInPlace(heap, parentPosition, childPosition);
+        parentPosition = childPosition;
+        childPosition = 2 * parentPosition + 1;
     }
 }
 
