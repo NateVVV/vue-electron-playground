@@ -29,7 +29,7 @@ function filledArray(size) {
 
 /**
  * Swap two values in an array, specified by the indices
- * @param {Array<number>} array The array in which the values get swapped
+ * @param {Array.<number>} array The array in which the values get swapped
  * @param {number} first index of the first value
  * @param {number} second index of the second value
  * @param {number} wait time how long to wait after the values were swapped
