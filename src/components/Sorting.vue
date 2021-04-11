@@ -9,6 +9,12 @@
                 <v-btn elevation="2" @click="createNumberRange" class="ma-1">
                     create equal range
                 </v-btn>
+                <v-text-field
+                    v-model="arraySize"
+                    hint="Specify the size of the array which gets sorted"
+                    label="Size"
+                >
+                </v-text-field>
             </div>
             <div>
                 <v-btn
@@ -90,6 +96,7 @@ const gradients = [
 export default {
     name: "Sorting",
     data: () => ({
+        arraySize: 100,
         values: [],
         width: 1,
         radius: 1,
@@ -121,8 +128,8 @@ export default {
     methods: {
         randomize: async function() {
             this.autoDraw = true;
-            const amount = 100;
-            const maxNumber = 99;
+            const amount = this.arraySize;
+            const maxNumber = amount - 1;
             this.values = [];
             await sleep(50);
             for (let i = 0; i < amount; i++) {
@@ -134,7 +141,7 @@ export default {
         },
         createNumberRange: async function() {
             this.autoDraw = true;
-            const amount = 100;
+            const amount = this.arraySize;
             this.values = [];
             await sleep(50);
             for (let i = 0; i < amount; i++) {
