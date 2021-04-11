@@ -138,11 +138,12 @@ export default {
             await sleep(50);
             const amount = this.arraySize;
             const values = this.values;
-            values.splice(amount);
+            let newValues = [];
             for (let i = 0; i < amount; i++) {
                 const n = Math.random() * (amount - 1) + 1;
-                values[i] = Math.floor(n);
+                newValues.push(Math.floor(n));
             }
+            values.push(...newValues);
             console.log("Randomized");
             this.unlockSorting();
         },
@@ -152,11 +153,12 @@ export default {
             await sleep(50);
             const amount = this.arraySize;
             const values = this.values;
-            values.splice(amount);
+            let newValues = [];
             for (let i = 0; i < amount; i++) {
-                values[i] = i + 1;
+                newValues.push(i + 1);
             }
-            this.lockSorting()
+            values.push(...newValues);
+            this.lockSorting();
             await this.shuffle(values);
             console.log("Shuffled");
             this.unlockSorting();
@@ -176,8 +178,8 @@ export default {
         },
         swapInArray: async function(array, firstIndex, secondIndex, wait = 1) {
             const temp = array[firstIndex];
-            array.splice(firstIndex, 1, array[secondIndex])
-            array.splice(secondIndex, 1, temp)
+            array.splice(firstIndex, 1, array[secondIndex]);
+            array.splice(secondIndex, 1, temp);
             await sleep(wait);
         },
         sort: async function(algorithm) {
