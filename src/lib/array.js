@@ -38,7 +38,7 @@ async function swap(array, first, second, wait = 1) {
     const temp = array[first];
     array.splice(first, 1, array[second]);
     array.splice(second, 1, temp);
-    await sleep(wait);
+    if (wait > 0) await sleep(wait);
 }
 
 export { randomArray, filledArray, swap };

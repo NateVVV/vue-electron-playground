@@ -1,19 +1,17 @@
 import { swap } from "@/lib/array.js";
 
-async function bubblesort(array) {
+async function bubblesort(array, swapDelay = 1) {
     for (let n = array.length; n > 1; n--) {
         for (let i = 0; i < n - 1; i++) {
             if (array[i] > array[i + 1]) {
                 // swap elements
-                await swap(array, i, i + 1);
+                await swap(array, i, i + 1, swapDelay);
             }
-            // wait after every step (to visualize the complexity)
-            //await sleep(1);
         }
     }
 }
 
-async function improvedBubblesort(array) {
+async function improvedBubblesort(array, swapDelay = 1) {
     let swapped;
     let n = array.length;
     do {
@@ -21,10 +19,9 @@ async function improvedBubblesort(array) {
         for (let i = 0; i < n - 1; i++) {
             if (array[i] > array[i + 1]) {
                 // swap elements
-                await swap(array, i, i + 1);
+                await swap(array, i, i + 1, swapDelay);
                 swapped = true;
             }
-            //await sleep(1);
         }
         n--;
     } while (swapped);

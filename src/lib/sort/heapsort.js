@@ -1,7 +1,7 @@
 import { swap } from "@/lib/array.js";
 
-async function heapsort(array) {
-    await buildHeap(array);
+async function heapsort(array, swapDelay = 1) {
+    await buildHeap(array, swapDelay);
 
     for (
         let swapPosition = array.length - 1;
@@ -9,21 +9,21 @@ async function heapsort(array) {
         swapPosition--
     ) {
         // move root to end
-        await swap(array, 0, swapPosition);
+        await swap(array, 0, swapPosition, swapDelay);
         // Fix remaining heap
-        await heapify(array, swapPosition, 0);
+        await heapify(array, swapPosition, 0, swapDelay);
     }
 }
 
-async function buildHeap(array) {
+async function buildHeap(array, swapDelay) {
     const lastParentNode = Math.floor(array.length / 2) - 1;
     // Heapify it from here on backwards
     for (let i = lastParentNode; i >= 0; i--) {
-        await heapify(array, array.length, i);
+        await heapify(array, array.length, i, swapDelay);
     }
 }
 
-async function heapify(heap, length, parentPosition) {
+async function heapify(heap, length, parentPosition, swapDelay) {
     let childPosition = 2 * parentPosition + 1;
     while (childPosition < length) {
         if (
@@ -32,7 +32,7 @@ async function heapify(heap, length, parentPosition) {
         )
             childPosition += 1;
         if (heap[parentPosition] >= heap[childPosition]) break;
-        await swap(heap, parentPosition, childPosition);
+        await swap(heap, parentPosition, childPosition, swapDelay);
         parentPosition = childPosition;
         childPosition = 2 * parentPosition + 1;
     }

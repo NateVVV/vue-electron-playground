@@ -164,7 +164,7 @@ export default {
             await sleep(50);
             this.values = filledArray(this.arraySize);
             this.lockSorting();
-            await shuffle(this.values);
+            await shuffle(this.values, 1);
             console.log("Shuffled");
             this.unlockSorting();
         },
@@ -179,7 +179,7 @@ export default {
             this.lockSorting();
             const sort = this.sortMapping.get(algorithm);
             console.time("sort");
-            await sort(this.values);
+            await sort(this.values, 1);
             console.timeEnd("sort");
             console.log("Finished sorting");
             this.unlockSorting();
