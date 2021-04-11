@@ -165,8 +165,8 @@ export default {
         },
         sort: async function(algorithm) {
             this.lockSorting();
-            const sortAlgorithm = this.sortMapping.get(algorithm);
-            await sortAlgorithm(this.values);
+            const sort = this.sortMapping.get(algorithm);
+            await sort(this.values);
             console.log("Finished sorting");
             this.unlockSorting();
         },
