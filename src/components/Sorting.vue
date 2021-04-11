@@ -55,8 +55,18 @@
                 <v-btn class="ma-1" disabled>
                     Mergesort
                 </v-btn>
-                <v-btn class="ma-1" disabled>
+                <v-btn
+                    @click="sort('heapsort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Heapsort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Selectionsort
+                </v-btn>
+                <v-btn class="ma-1" disabled>
+                    Cocktailsort
                 </v-btn>
             </div>
         </v-card>
@@ -89,6 +99,7 @@ import { bubblesort, improvedBubblesort } from "@/lib/sort/bubblesort.js";
 import { insertionsort } from "@/lib/sort/insertionsort.js";
 import { shellsort } from "@/lib/sort/shellsort.js";
 import { quicksort } from "@/lib/sort/quicksort.js";
+import { heapsort } from "@/lib/sort/heapsort.js";
 
 const gradients = [
     ["#222"],
@@ -130,6 +141,7 @@ export default {
             ["insertionsort", insertionsort],
             ["shellsort", shellsort],
             ["quicksort", quicksort],
+            ["heapsort", heapsort],
         ]);
         this.sortMapping = sortMapping;
     },
@@ -166,7 +178,9 @@ export default {
         sort: async function(algorithm) {
             this.lockSorting();
             const sort = this.sortMapping.get(algorithm);
+            console.time("sort");
             await sort(this.values);
+            console.timeEnd("sort");
             console.log("Finished sorting");
             this.unlockSorting();
         },
