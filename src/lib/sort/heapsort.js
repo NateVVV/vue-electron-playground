@@ -1,4 +1,4 @@
-import { swapInPlace } from "@/lib/array.js";
+import { swap } from "@/lib/array.js";
 
 async function heapsort(array) {
     await buildHeap(array);
@@ -9,7 +9,7 @@ async function heapsort(array) {
         swapPosition--
     ) {
         // move root to end
-        await swapInPlace(array, 0, swapPosition);
+        await swap(array, 0, swapPosition);
         // Fix remaining heap
         await heapify(array, swapPosition, 0);
     }
@@ -32,7 +32,7 @@ async function heapify(heap, length, parentPosition) {
         )
             childPosition += 1;
         if (heap[parentPosition] >= heap[childPosition]) break;
-        await swapInPlace(heap, parentPosition, childPosition);
+        await swap(heap, parentPosition, childPosition);
         parentPosition = childPosition;
         childPosition = 2 * parentPosition + 1;
     }

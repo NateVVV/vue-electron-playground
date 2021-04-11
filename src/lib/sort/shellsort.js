@@ -1,4 +1,4 @@
-import { swapInPlace } from "@/lib/array.js";
+import { swap } from "@/lib/array.js";
 
 async function shellsort(array) {
     const length = array.length;
@@ -6,7 +6,7 @@ async function shellsort(array) {
         for (let i = gap; i < length; i++) {
             const temp = array[i];
             for (let j = i; j >= gap && array[j - gap] > temp; j -= gap) {
-                await swapInPlace(array, j, j - gap);
+                await swap(array, j, j - gap);
             }
         }
     }

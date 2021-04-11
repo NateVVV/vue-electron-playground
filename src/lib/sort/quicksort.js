@@ -1,4 +1,4 @@
-import { swapInPlace } from "@/lib/array.js";
+import { swap } from "@/lib/array.js";
 
 async function quicksort(array) {
     const length = array.length;
@@ -25,10 +25,10 @@ async function divide(elements, left, right) {
         // Find the last element < pivot
         while (j > left && elements[j] >= pivot) j--;
         // If the greater element is left of the lesser element, switch them
-        if (i < j) await swapInPlace(elements, i, j);
+        if (i < j) await swap(elements, i, j);
     }
     // Move pivot element to its final position
-    if (elements[i] > pivot) await swapInPlace(elements, i, right);
+    if (elements[i] > pivot) await swap(elements, i, right);
 
     return i;
 }
