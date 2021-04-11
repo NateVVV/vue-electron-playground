@@ -13,8 +13,16 @@
                     v-model="arraySize"
                     hint="Specify the size of the array which gets sorted"
                     label="Size"
-                >
-                </v-text-field>
+                ></v-text-field>
+                <v-slider
+                    v-model="delay"
+                    color="orange"
+                    label="Delay"
+                    hint="Delay of swaps (ms)"
+                    min="0"
+                    max="100"
+                    thumb-label
+                ></v-slider>
             </div>
             <div>
                 <v-btn
@@ -116,6 +124,7 @@ export default {
         arraySize: 100,
         values: [],
         isSorting: false,
+        delay: 1,
         sortMapping: new Map(),
         sparklineSettings: {
             width: 1,
@@ -164,7 +173,7 @@ export default {
             await sleep(50);
             this.values = filledArray(this.arraySize);
             this.lockSorting();
-            await shuffle(this.values, 1);
+            await shuffle(this.values, this.delay);
             console.log("Shuffled");
             this.unlockSorting();
         },
@@ -179,7 +188,7 @@ export default {
             this.lockSorting();
             const sort = this.sortMapping.get(algorithm);
             console.time("sort");
-            await sort(this.values, 1);
+            await sort(this.values, this.delay);
             console.timeEnd("sort");
             console.log("Finished sorting");
             this.unlockSorting();
