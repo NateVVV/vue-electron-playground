@@ -31,6 +31,7 @@ async function heapify(heap, length, parentPosition, swapDelay) {
             heap[childPosition + 1] > heap[childPosition]
         )
             childPosition += 1;
+
         if (heap[parentPosition] >= heap[childPosition]) break;
         await swap(heap, parentPosition, childPosition, swapDelay);
         parentPosition = childPosition;
