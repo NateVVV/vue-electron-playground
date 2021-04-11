@@ -67,16 +67,16 @@
         </v-card>
         <v-sparkline
             :value="values"
-            :gradient="gradient"
-            :smooth="radius || false"
-            :padding="padding"
-            :line-width="width"
-            :stroke-linecap="lineCap"
-            :gradient-direction="gradientDirection"
-            :fill="fill"
-            :type="type"
-            :auto-line-width="autoLineWidth"
-            :auto-draw="autoDraw"
+            :gradient="sparklineSettings.gradient"
+            :smooth="sparklineSettings.radius || false"
+            :padding="sparklineSettings.padding"
+            :line-width="sparklineSettings.width"
+            :stroke-linecap="sparklineSettings.lineCap"
+            :gradient-direction="sparklineSettings.gradientDirection"
+            :fill="sparklineSettings.fill"
+            :type="sparklineSettings.type"
+            :auto-line-width="sparklineSettings.autoLineWidth"
+            :auto-draw="sparklineSettings.autoDraw"
         ></v-sparkline>
     </v-container>
 </template>
@@ -98,19 +98,21 @@ export default {
     data: () => ({
         arraySize: 100,
         values: [],
-        width: 1,
-        radius: 1,
-        padding: 8,
-        lineCap: "round",
-        gradient: gradients[5],
-        gradientDirection: "top",
-        gradients,
-        fill: true,
-        type: "bar",
-        autoLineWidth: false,
-        autoDraw: false,
         isSorting: false,
         sortMapping: new Map(),
+        sparklineSettings: {
+            width: 1,
+            radius: 1,
+            padding: 8,
+            lineCap: "round",
+            gradient: gradients[5],
+            gradientDirection: "top",
+            gradients,
+            fill: true,
+            type: "bar",
+            autoLineWidth: false,
+            autoDraw: false,
+        },
     }),
     mounted: async function() {
         await this.randomize();
