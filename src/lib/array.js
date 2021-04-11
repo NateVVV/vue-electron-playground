@@ -1,4 +1,4 @@
-import { sleep } from "@/utils.js";
+import { sleep } from "@/lib/utils.js";
 
 /**
  * Creates an array with random values. The maximum values is equal the size of the array

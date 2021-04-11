@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { sleep } from "@/utils.js";
+import { sleep } from "@/lib/utils.js";
 import { randomArray, filledArray } from "@/lib/array.js";
 import { shuffle } from "@/lib/sort/shuffle.js";
 import { bubblesort, improvedBubblesort } from "@/lib/sort/bubblesort.js";
