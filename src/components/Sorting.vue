@@ -126,28 +126,38 @@ export default {
         this.sortMapping = sortMapping;
     },
     methods: {
-        randomize: async function() {
-            this.autoDraw = true;
-            const amount = this.arraySize;
-            const maxNumber = amount - 1;
+        cancelSorting: function() {
+            // delete old array -> set array to zero
+            this.values.splice(0);
+            // create a completely new reference to this array
             this.values = [];
+        },
+        randomize: async function() {
+            this.cancelSorting();
+            this.autoDraw = true;
             await sleep(50);
+            const amount = this.arraySize;
+            const values = this.values;
+            values.splice(amount);
             for (let i = 0; i < amount; i++) {
-                let n = Math.random() * maxNumber + 1;
-                this.values.push(Math.floor(n));
+                const n = Math.random() * (amount - 1) + 1;
+                values[i] = Math.floor(n);
             }
             console.log("Randomized");
             this.unlockSorting();
         },
         createNumberRange: async function() {
+            this.cancelSorting();
             this.autoDraw = true;
-            const amount = this.arraySize;
-            this.values = [];
             await sleep(50);
+            const amount = this.arraySize;
+            const values = this.values;
+            values.splice(amount);
             for (let i = 0; i < amount; i++) {
-                this.values.push(i + 1);
+                values[i] = i + 1;
             }
-            await this.shuffle(this.values);
+            this.lockSorting()
+            await this.shuffle(values);
             console.log("Shuffled");
             this.unlockSorting();
         },
