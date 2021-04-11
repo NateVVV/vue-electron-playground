@@ -13,6 +13,7 @@
                     v-model="arraySize"
                     hint="Specify the size of the array which gets sorted"
                     label="Size"
+                    type="number"
                 ></v-text-field>
                 <v-slider
                     v-model="delay"
