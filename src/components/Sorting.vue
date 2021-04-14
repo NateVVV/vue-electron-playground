@@ -77,6 +77,13 @@
                 <v-btn class="ma-1" disabled>
                     Cocktailsort
                 </v-btn>
+                <v-btn
+                    @click="sort('bogosort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
+                    Bogosort
+                </v-btn>
             </div>
         </v-card>
         <v-card class="d-flex flex-wrap mt-2" flat v-if="false">
@@ -109,6 +116,7 @@ import { insertionsort } from "@/lib/sort/insertionsort.js";
 import { shellsort } from "@/lib/sort/shellsort.js";
 import { quicksort } from "@/lib/sort/quicksort.js";
 import { heapsort } from "@/lib/sort/heapsort.js";
+import { bogosort} from "@/lib/sort/bogosort.js"
 
 const gradients = [
     ["#222"],
@@ -152,6 +160,7 @@ export default {
             ["shellsort", shellsort],
             ["quicksort", quicksort],
             ["heapsort", heapsort],
+            ["bogosort", bogosort],
         ]);
         this.sortMapping = sortMapping;
     },
