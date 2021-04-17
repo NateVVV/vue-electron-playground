@@ -135,7 +135,6 @@
 </template>
 
 <script>
-import { sleep } from "@/lib/utils.js";
 import { randomArray, filledArray } from "@/lib/array.js";
 import { shuffle } from "@/lib/sort/shuffle.js";
 import { bubblesort, improvedBubblesort } from "@/lib/sort/bubblesort.js";
@@ -158,6 +157,14 @@ const gradients = [
     ["#00c6ff", "#F0F", "#FF0"],
     ["#f72047", "#ffd200", "#1feaea"],
 ];
+
+function startClock() {
+    eventBus.$emit("reset-and-start-clock");
+}
+
+function stopClock() {
+    eventBus.$emit("stop-clock");
+}
 
 export default {
     name: "Sorting",
@@ -212,7 +219,6 @@ export default {
         randomize: async function() {
             this.cancelSorting();
             this.autoDraw = true;
-            await sleep(50);
             this.values = randomArray(this.arraySize);
             console.log("Randomized");
             this.unlockSorting();
@@ -220,10 +226,11 @@ export default {
         createNumberRange: async function() {
             this.cancelSorting();
             this.autoDraw = true;
-            await sleep(50);
+            startClock();
             this.values = filledArray(this.arraySize);
             this.lockSorting();
             await shuffle(this.values, this.delay);
+            stopClock();
             console.log("Shuffled");
             this.unlockSorting();
         },
@@ -237,9 +244,9 @@ export default {
         sort: async function(algorithm) {
             this.lockSorting();
             const sort = this.sortMapping.get(algorithm);
-            eventBus.$emit("reset-and-start-clock")
+            startClock();
             await sort(this.values, this.delay);
-            eventBus.$emit("stop-clock")
+            stopClock();
             console.log("Finished sorting");
             this.unlockSorting();
         },
