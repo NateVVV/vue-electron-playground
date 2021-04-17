@@ -41,6 +41,14 @@ async function swap(array, first, second, { wait = 1 } = {}) {
     await sleep(wait);
 }
 
+/**
+ * shift the elements in the specified range to the right. The last element is rotated to the first in the range.
+ * @param {Array.<number>} array The array in which some valeus are shifted right
+ * @param {number} from the index where to start with the shifting
+ * @param {number} to the index where to end with the shifting
+ * @param {Object} swapDelay The delay for the shift operation
+ * @param {number} swapDelay.wait The delay for the shift operation [ms] 
+ */
 async function shiftRight(array, from, to, { wait = 1 } = {}) {
     const temp = array[to];
     for (let i = to; i > from; i--) {
@@ -50,6 +58,14 @@ async function shiftRight(array, from, to, { wait = 1 } = {}) {
     await sleep(wait);
 }
 
+/**
+ * Shift the elements in the specified range to the left. THe first element is rotated to the last in the range
+ * @param {Array.<number>} array The array in which some values are shifted to the left
+ * @param {number} from The index where to start with the shifting
+ * @param {number} to The index where to end with the shifting
+ * @param {Object} swapDelay The delay for the shift operation
+ * @param {number} swapDelay.wait The delay for the shift operation
+ */
 async function shiftLeft(array, from, to, { wait = 1 } = {}) {
     const temp = array[from];
     for (let i = from; i < to; i++) {
