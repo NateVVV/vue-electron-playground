@@ -5,10 +5,8 @@ async function mergesort(elements, swapDelay = { wait: 1 }) {
 }
 
 async function mergesortRecursive(elements, left, right, swapDelay) {
-    console.log(`recursive mergesort, left: ${left}, right: ${right}`);
     if (left < right) {
         let mid = Math.floor(left + (right - left) / 2);
-        console.log(`Mid: ${mid}`);
         await mergesortRecursive(elements, left, mid, swapDelay);
         await mergesortRecursive(elements, mid + 1, right, swapDelay);
         await merge(elements, left, mid, right, swapDelay);
@@ -16,7 +14,6 @@ async function mergesortRecursive(elements, left, right, swapDelay) {
 }
 
 async function merge(elements, start, mid, end, swapDelay) {
-    console.log(`merge. start: ${start}, mid: ${mid}, end: ${end}`);
     let start2 = mid + 1;
     if (elements[mid] <= elements[start2]) return;
     while (start <= mid && start2 <= end) {
