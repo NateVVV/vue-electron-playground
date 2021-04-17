@@ -52,7 +52,7 @@
                     class="ma-1"
                     :disabled="isSorting"
                 >
-                    fast Insertionsort
+                    Fast Insertionsort
                 </v-btn>
                 <v-btn
                     @click="sort('shellsort')"
@@ -88,6 +88,13 @@
                     :disabled="isSorting"
                 >
                     Selectionsort
+                </v-btn>
+                <v-btn
+                    @click="sort('fastSelectionsort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
+                    Fast Selectionsort
                 </v-btn>
                 <v-btn
                     @click="sort('cocktailsort')"
@@ -136,7 +143,7 @@ import { shellsort } from "@/lib/sort/shellsort.js";
 import { quicksort } from "@/lib/sort/quicksort.js";
 import { heapsort } from "@/lib/sort/heapsort.js";
 import { bogosort } from "@/lib/sort/bogosort.js";
-import { selectionsort } from "@/lib/sort/selectionsort.js";
+import { selectionsort, fastSelectionsort } from "@/lib/sort/selectionsort.js";
 import { cocktailsort } from "@/lib/sort/cocktailsort.js";
 import { mergesort } from "@/lib/sort/mergesort.js";
 
@@ -185,6 +192,7 @@ export default {
             ["heapsort", heapsort],
             ["bogosort", bogosort],
             ["selectionsort", selectionsort],
+            ["fastSelectionsort", fastSelectionsort],
             ["cocktailsort", cocktailsort],
             ["mergesort", mergesort],
         ]);
