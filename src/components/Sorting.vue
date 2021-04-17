@@ -29,84 +29,84 @@
                 <v-btn
                     @click="sort('bubblesort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Bubblesort
                 </v-btn>
                 <v-btn
                     @click="sort('improvedBubblesort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     improved Bubblesort
                 </v-btn>
                 <v-btn
                     @click="sort('insertionsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Insertionsort
                 </v-btn>
                 <v-btn
                     @click="sort('fastInsertionsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Fast Insertionsort
                 </v-btn>
                 <v-btn
                     @click="sort('shellsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Shellsort
                 </v-btn>
                 <v-btn
                     @click="sort('quicksort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Quicksort
                 </v-btn>
                 <v-btn
                     @click="sort('mergesort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Mergesort
                 </v-btn>
                 <v-btn
                     @click="sort('heapsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Heapsort
                 </v-btn>
                 <v-btn
                     @click="sort('selectionsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Selectionsort
                 </v-btn>
                 <v-btn
                     @click="sort('fastSelectionsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Fast Selectionsort
                 </v-btn>
                 <v-btn
                     @click="sort('cocktailsort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Cocktailsort
                 </v-btn>
                 <v-btn
                     @click="sort('bogosort')"
                     class="ma-1"
-                    :disabled="isSorting"
+                    :disabled="isSorting > 0"
                 >
                     Bogosort
                 </v-btn>
@@ -178,7 +178,7 @@ export default {
     data: () => ({
         arraySize: 100,
         values: [],
-        isSorting: false,
+        isSorting: 0,
         delay: { wait: 1 },
         sortMapping: new Map(),
         sparklineSettings: {
@@ -225,7 +225,7 @@ export default {
             this.autoDraw = true;
             this.values = randomArray(this.arraySize);
             // stop the stop watch if running
-            stopClock()
+            stopClock();
             console.log("Randomized");
             this.unlockSorting();
         },
@@ -242,10 +242,10 @@ export default {
         },
         lockSorting: function() {
             this.autoDraw = false;
-            this.isSorting = true;
+            this.isSorting++;
         },
         unlockSorting: function() {
-            this.isSorting = false;
+            if (this.isSorting > 0) this.isSorting--;
         },
         sort: async function(algorithm) {
             this.lockSorting();
