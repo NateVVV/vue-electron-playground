@@ -71,7 +71,11 @@
                 >
                     Heapsort
                 </v-btn>
-                <v-btn class="ma-1" disabled>
+                <v-btn
+                    @click="sort('selectionsort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
                     Selectionsort
                 </v-btn>
                 <v-btn class="ma-1" disabled>
@@ -116,7 +120,8 @@ import { insertionsort } from "@/lib/sort/insertionsort.js";
 import { shellsort } from "@/lib/sort/shellsort.js";
 import { quicksort } from "@/lib/sort/quicksort.js";
 import { heapsort } from "@/lib/sort/heapsort.js";
-import { bogosort} from "@/lib/sort/bogosort.js"
+import { bogosort } from "@/lib/sort/bogosort.js";
+import { selectionsort } from "@/lib/sort/selectionsort.js";
 
 const gradients = [
     ["#222"],
@@ -161,6 +166,7 @@ export default {
             ["quicksort", quicksort],
             ["heapsort", heapsort],
             ["bogosort", bogosort],
+            ["selectionsort", selectionsort],
         ]);
         this.sortMapping = sortMapping;
     },
