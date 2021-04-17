@@ -26,11 +26,6 @@ async function merge(elements, start, mid, end, swapDelay) {
         if (elements[start] <= elements[start2]) {
             start++;
         } else {
-            //let index = start2;
-            //while (index != start) {
-                //await swap(elements, index, index - 1, swapDelay);
-                //index--;
-            //}
             await shiftRight(elements, start, start2, swapDelay)
             start++;
             mid++;
