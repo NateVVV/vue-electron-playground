@@ -158,12 +158,16 @@ const gradients = [
     ["#f72047", "#ffd200", "#1feaea"],
 ];
 
+let timerStartCommands = 0;
+
 function startClock() {
     eventBus.$emit("reset-and-start-clock");
+    timerStartCommands++;
 }
 
 function stopClock() {
-    eventBus.$emit("stop-clock");
+    if (timerStartCommands > 0) timerStartCommands--;
+    if (timerStartCommands == 0) eventBus.$emit("stop-clock");
 }
 
 export default {
@@ -220,6 +224,8 @@ export default {
             this.cancelSorting();
             this.autoDraw = true;
             this.values = randomArray(this.arraySize);
+            // stop the stop watch if running
+            stopClock()
             console.log("Randomized");
             this.unlockSorting();
         },
