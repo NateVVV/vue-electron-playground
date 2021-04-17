@@ -130,6 +130,7 @@
             :auto-line-width="sparklineSettings.autoLineWidth"
             :auto-draw="sparklineSettings.autoDraw"
         ></v-sparkline>
+        <Clock></Clock>
     </v-container>
 </template>
 
@@ -146,6 +147,8 @@ import { bogosort } from "@/lib/sort/bogosort.js";
 import { selectionsort, fastSelectionsort } from "@/lib/sort/selectionsort.js";
 import { cocktailsort } from "@/lib/sort/cocktailsort.js";
 import { mergesort } from "@/lib/sort/mergesort.js";
+import Clock from "@/components/Clock.vue";
+import eventBus from "@/eventBus.js";
 
 const gradients = [
     ["#222"],
@@ -158,6 +161,9 @@ const gradients = [
 
 export default {
     name: "Sorting",
+    components: {
+        Clock,
+    },
     data: () => ({
         arraySize: 100,
         values: [],
@@ -231,9 +237,9 @@ export default {
         sort: async function(algorithm) {
             this.lockSorting();
             const sort = this.sortMapping.get(algorithm);
-            console.time("sort");
+            eventBus.$emit("reset-and-start-clock")
             await sort(this.values, this.delay);
-            console.timeEnd("sort");
+            eventBus.$emit("stop-clock")
             console.log("Finished sorting");
             this.unlockSorting();
         },
