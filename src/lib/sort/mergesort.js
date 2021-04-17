@@ -1,4 +1,4 @@
-import { swap } from "@/lib/array.js";
+import { shiftRight } from "@/lib/array.js";
 
 async function mergesort(elements, swapDelay = { wait: 1 }) {
     // let start = 0;
@@ -26,11 +26,12 @@ async function merge(elements, start, mid, end, swapDelay) {
         if (elements[start] <= elements[start2]) {
             start++;
         } else {
-            let index = start2;
-            while (index != start) {
-                await swap(elements, index, index - 1, swapDelay);
-                index--;
-            }
+            //let index = start2;
+            //while (index != start) {
+                //await swap(elements, index, index - 1, swapDelay);
+                //index--;
+            //}
+            await shiftRight(elements, start, start2, swapDelay)
             start++;
             mid++;
             start2++;

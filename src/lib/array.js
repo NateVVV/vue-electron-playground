@@ -41,4 +41,13 @@ async function swap(array, first, second, { wait = 1 } = {}) {
     await sleep(wait);
 }
 
-export { randomArray, filledArray, swap };
+async function shiftRight(array, from, to, { wait = 1 } = {}) {
+    const temp = array[to];
+    for (let i = to; i > from; i--) {
+        array.splice(i, 1, array[i - 1]);
+    }
+    array.splice(from, 1, temp);
+    await sleep(wait);
+}
+
+export { randomArray, filledArray, swap, shiftRight };
