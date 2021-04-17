@@ -1,9 +1,6 @@
 import { shiftRight } from "@/lib/array.js";
 
 async function mergesort(elements, swapDelay = { wait: 1 }) {
-    // let start = 0;
-    // let end = elements.length - 1;
-    // let mid = Math.floor((end - 1) / 2);
     await mergesortRecursive(elements, 0, elements.length - 1, swapDelay);
 }
 
