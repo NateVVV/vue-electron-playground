@@ -48,6 +48,13 @@
                     Insertionsort
                 </v-btn>
                 <v-btn
+                    @click="sort('fastInsertionsort')"
+                    class="ma-1"
+                    :disabled="isSorting"
+                >
+                    fast Insertionsort
+                </v-btn>
+                <v-btn
                     @click="sort('shellsort')"
                     class="ma-1"
                     :disabled="isSorting"
@@ -124,7 +131,7 @@ import { sleep } from "@/lib/utils.js";
 import { randomArray, filledArray } from "@/lib/array.js";
 import { shuffle } from "@/lib/sort/shuffle.js";
 import { bubblesort, improvedBubblesort } from "@/lib/sort/bubblesort.js";
-import { insertionsort } from "@/lib/sort/insertionsort.js";
+import { insertionsort, fastInsertionsort } from "@/lib/sort/insertionsort.js";
 import { shellsort } from "@/lib/sort/shellsort.js";
 import { quicksort } from "@/lib/sort/quicksort.js";
 import { heapsort } from "@/lib/sort/heapsort.js";
@@ -172,6 +179,7 @@ export default {
             ["bubblesort", bubblesort],
             ["improvedBubblesort", improvedBubblesort],
             ["insertionsort", insertionsort],
+            ["fastInsertionsort", fastInsertionsort],
             ["shellsort", shellsort],
             ["quicksort", quicksort],
             ["heapsort", heapsort],

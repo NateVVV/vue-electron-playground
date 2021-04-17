@@ -1,4 +1,4 @@
-import { swap } from "@/lib/array.js";
+import { swap, shiftRight } from "@/lib/array.js";
 
 async function insertionsort(array, swapDelay = { wait: 1 }) {
     for (let i = 1; i < array.length; i++) {
@@ -14,4 +14,15 @@ async function insertionsort(array, swapDelay = { wait: 1 }) {
     }
 }
 
-export { insertionsort };
+async function fastInsertionsort(elements, swapDelay = {wait: 1}) {
+    for (let i = 1; i < elements.length; i++) {
+        const temp = elements[i];
+        let j = i;
+        while (j > 0 && elements[j - 1] > temp) {
+            j--;
+        }
+        await shiftRight(elements, j, i, swapDelay);
+    }
+}
+
+export { insertionsort, fastInsertionsort };
