@@ -1,16 +1,16 @@
 import { swap } from "@/lib/array.js";
 
 async function cocktailsort(elements, swapDelay = { wait: 1 }) {
-    let swapped = true;
+    let swapped;
     let start = 0;
     let end = elements.length - 1;
-    while (swapped) {
+    do {
         swapped = await bubblesortUpwards(elements, start, end, swapDelay);
         if (!swapped) break;
         end--;
         swapped = await bubblesortDownwards(elements, end, start, swapDelay);
         start++;
-    }
+    } while (swapped);
 }
 
 async function bubblesortUpwards(elements, from, to, swapDelay) {
