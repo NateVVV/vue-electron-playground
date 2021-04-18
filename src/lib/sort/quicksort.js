@@ -2,7 +2,7 @@ import { swap } from "@/lib/array.js";
 
 /**
  * Sort an array in place
- * @param {Array.<number>} array The array which gets sorted
+ * @param {number[]} array The array which gets sorted
  * @param {Object} swapDelay The delay for a swap operation
  * @param {number} swapDelay.wait The delay for a swap operation [ms]
  */
@@ -13,7 +13,7 @@ async function quicksort(array, swapDelay = { wait: 1 }) {
 
 /**
  * Sort an array in the range [left,right]
- * @param {Array.<number>} elements The array which gets sorted
+ * @param {number[]} elements The array which gets sorted
  * @param {number} left left boundary of the range
  * @param {number} right right boundary of the range
  * @param {Object} swapDelay  The delay for a swap operation
