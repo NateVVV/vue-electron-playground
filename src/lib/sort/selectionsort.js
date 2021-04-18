@@ -37,7 +37,7 @@ async function fastSelectionsort(elements, swapDelay = { wait: 1 }) {
 }
 
 /**
- * 
+ * Find the smalles element of an array in the range [from,to)
  * @param {Array.<number>} elements The array which is investigated
  * @param {number} from index where to start the search
  * @param {number} to index where to end the search
