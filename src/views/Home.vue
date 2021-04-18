@@ -1,16 +1,12 @@
 <template>
-    <div class="home">
-        <Sorting></Sorting>
-    </div>
+    <v-container>
+        Fancy Home Page
+    </v-container>
 </template>
 
 <script>
-import Sorting from '@/components/Sorting.vue'
 
 export default {
-    name: 'Home',
-    components: {
-        Sorting,
-    }
+    name: 'Home'
 }
 </script>

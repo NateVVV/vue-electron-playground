@@ -24,7 +24,11 @@
             <v-spacer></v-spacer>
 
             <router-link to="/"
-                ><span class="mx-2 white--text">Home</span></router-link
+                >
+                <span class="mx-2 white--text">Home</span></router-link
+            >|
+            <router-link to="/sorting"
+                ><span class="mx-2 white--text">Sorting</span></router-link
             >|
             <router-link to="/about"
                 ><span class="mx-2 white--text">About</span></router-link
@@ -47,9 +51,8 @@
 </template>
 
 <script>
-
 export default {
-    name: 'App',
+    name: "App",
 
     data: () => ({
         //
