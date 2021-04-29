@@ -9,7 +9,7 @@
                     <router-link
                         v-for="page in pages"
                         :key="page.name"
-                        :to="page.to"
+                        :to="page.path"
                         class="black--text
                         text-decoration-none font-weight-thin"
                     >
@@ -43,7 +43,10 @@
                     src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
                     width="100"
                 />
-                <v-toolbar-title>Playground</v-toolbar-title>
+                <v-toolbar-title class="mx-2">
+                    Playground –
+                    {{ pages[selectedItem].name }}
+                </v-toolbar-title>
             </div>
 
             <v-spacer></v-spacer>
@@ -67,29 +70,21 @@
 <script>
 export default {
     name: "App",
-
     data: () => ({
         drawer: null,
         selectedItem: 0,
-        pages: [
-            {
-                name: "Home",
-                to: "/",
-            },
-            {
-                name: "Sorting",
-                to: "/sorting",
-            },
-            {
-                name: "About",
-                to: "/about",
-            },
-        ],
+        pages: null,
     }),
     watch: {
         selectedItem() {
             this.drawer = false;
         },
+    },
+    created() {
+        this.pages = this.$router.options.routes;
+        this.selectedItem = this.pages.findIndex(
+            (page) => page.path == this.$route.path
+        );
     },
 };
 </script>
