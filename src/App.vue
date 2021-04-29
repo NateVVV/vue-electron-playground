@@ -1,7 +1,42 @@
 <template>
     <v-app>
+        <v-navigation-drawer app v-model="drawer">
+            <v-list nav dense>
+                <v-list-item-group
+                    v-model="group"
+                    active-class="deep-purple--text text--accent-4"
+                >
+                    <router-link to="/" class="black--text text-decoration-none font-weight-thin">
+                        <v-list-item>
+                            <v-list-item-title>
+                                Home
+                            </v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+
+                    <router-link to="/sorting" class="black--text text-decoration-none font-weight-medium">
+                        <v-list-item>
+                            <v-list-item-title>
+                                Sorting
+                            </v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+
+                    <router-link to="/about" class="black--text text-decoration-none font-weight-bold">
+                        <v-list-item>
+                            <v-list-item-title>
+                                About
+                            </v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+                </v-list-item-group>
+            </v-list>
+        </v-navigation-drawer>
         <v-app-bar app color="primary" dark>
             <div class="d-flex align-center">
+                <v-app-bar-nav-icon
+                    @click="drawer = !drawer"
+                ></v-app-bar-nav-icon>
                 <v-img
                     alt="Vuetify Logo"
                     class="shrink mr-2"
@@ -10,7 +45,6 @@
                     transition="scale-transition"
                     width="40"
                 />
-
                 <v-img
                     alt="Vuetify Name"
                     class="shrink mt-1 hidden-sm-and-down"
@@ -19,20 +53,10 @@
                     src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
                     width="100"
                 />
+                <v-toolbar-title>Playground</v-toolbar-title>
             </div>
 
             <v-spacer></v-spacer>
-
-            <router-link to="/"
-                >
-                <span class="mx-2 white--text">Home</span></router-link
-            >|
-            <router-link to="/sorting"
-                ><span class="mx-2 white--text">Sorting</span></router-link
-            >|
-            <router-link to="/about"
-                ><span class="mx-2 white--text">About</span></router-link
-            >
 
             <v-btn
                 href="https://github.com/vuetifyjs/vuetify/releases/latest"
@@ -55,7 +79,13 @@ export default {
     name: "App",
 
     data: () => ({
-        //
+        drawer: null,
+        group: 0,
     }),
+    watch: {
+        group() {
+            this.drawer = false;
+        },
+    },
 };
 </script>
