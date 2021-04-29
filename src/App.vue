@@ -3,29 +3,19 @@
         <v-navigation-drawer app v-model="drawer">
             <v-list nav dense>
                 <v-list-item-group
-                    v-model="group"
+                    v-model="selectedItem"
                     active-class="deep-purple--text text--accent-4"
                 >
-                    <router-link to="/" class="black--text text-decoration-none font-weight-thin">
+                    <router-link
+                        v-for="page in pages"
+                        :key="page.name"
+                        :to="page.to"
+                        class="black--text
+                        text-decoration-none font-weight-thin"
+                    >
                         <v-list-item>
                             <v-list-item-title>
-                                Home
-                            </v-list-item-title>
-                        </v-list-item>
-                    </router-link>
-
-                    <router-link to="/sorting" class="black--text text-decoration-none font-weight-medium">
-                        <v-list-item>
-                            <v-list-item-title>
-                                Sorting
-                            </v-list-item-title>
-                        </v-list-item>
-                    </router-link>
-
-                    <router-link to="/about" class="black--text text-decoration-none font-weight-bold">
-                        <v-list-item>
-                            <v-list-item-title>
-                                About
+                                {{ page.name }}
                             </v-list-item-title>
                         </v-list-item>
                     </router-link>
@@ -80,10 +70,24 @@ export default {
 
     data: () => ({
         drawer: null,
-        group: 0,
+        selectedItem: 0,
+        pages: [
+            {
+                name: "Home",
+                to: "/",
+            },
+            {
+                name: "Sorting",
+                to: "/sorting",
+            },
+            {
+                name: "About",
+                to: "/about",
+            },
+        ],
     }),
     watch: {
-        group() {
+        selectedItem() {
             this.drawer = false;
         },
     },
