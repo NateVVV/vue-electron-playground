@@ -68,6 +68,10 @@
 </template>
 
 <script>
+function timeout(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default {
     name: "App",
     data: () => ({
@@ -80,10 +84,16 @@ export default {
             this.drawer = false;
         },
     },
-    created() {
+    async created() {
         this.pages = this.$router.options.routes;
+    },
+    async mounted() {
+        // This is needed when reloading (at least in electron)
+        // Otherwise, the title is wrong
+        await timeout(40);
+
         this.selectedItem = this.pages.findIndex(
-            (page) => page.path == this.$route.path
+            (page) => page.path === this.$route.path
         );
     },
 };
