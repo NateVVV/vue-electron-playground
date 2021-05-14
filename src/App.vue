@@ -5,6 +5,7 @@
                 <v-list-item-group
                     v-model="selectedItem"
                     active-class="deep-purple--text text--accent-4"
+                    mandatory
                 >
                     <router-link
                         v-for="page in pages"
